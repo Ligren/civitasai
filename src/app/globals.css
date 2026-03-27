@@ -1,26 +1,113 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0B0F1A;
+  --surface: #131825;
+  --card: #1A2035;
+  --accent: #3B82F6;
+  --accent-cyan: #06B6D4;
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --success: #22C55E;
+  --border: #1E293B;
+  --gradient: linear-gradient(135deg, #3B82F6, #06B6D4);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  --color-accent: var(--accent);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-success: var(--success);
+  --color-border: var(--border);
+  --font-sans: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  color-scheme: dark;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* Noise/grain texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Selection color */
+::selection {
+  background-color: rgba(59, 130, 246, 0.3);
+  color: #F8FAFC;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Hero orb animations */
+@keyframes orb-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60px, 40px) scale(1.1); }
+  66% { transform: translate(-30px, 60px) scale(0.95); }
+}
+
+@keyframes orb-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-50px, -30px) scale(0.9); }
+  66% { transform: translate(40px, -50px) scale(1.05); }
+}
+
+@keyframes orb-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, -40px) scale(1.08); }
+  66% { transform: translate(-60px, 20px) scale(0.92); }
+}
+
+.animate-orb-1 {
+  animation: orb-1 20s ease-in-out infinite;
+}
+
+.animate-orb-2 {
+  animation: orb-2 25s ease-in-out infinite;
+}
+
+.animate-orb-3 {
+  animation: orb-3 22s ease-in-out infinite;
+}
+
+/* Focus visible styles */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
